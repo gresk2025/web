@@ -1,0 +1,444 @@
+/* Estilos personalizados para scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #06b6d4;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0891b2;
+}
+
+/* Animaciones Personalizadas */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate3d(0, 40px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* HERO SECTION CORREGIDA */
+#hero {
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+/* Overlay para la opacidad */
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85);
+    z-index: 1;
+}
+
+/* Asegura que el contenido esté por encima del fondo */
+#hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* TIBURÓN CORREGIDO - PUNTO DE INICIO ORIGINAL */
+.shark-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.65;
+    z-index: 0;
+    pointer-events: none;
+    animation: swim 35s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.4));
+}
+
+/* Animación de "Nado" del Tiburón - VERSION ORIGINAL */
+@keyframes swim {
+    0% {
+        transform: translate(-50%, -50%) translateX(55%) translateY(-30%) scale(0.85) rotateY(0deg);
+    }
+    10% {
+        transform: translate(-50%, -50%) translateX(30%) translateY(25%) scale(0.95) rotateY(0deg);
+    }
+    20% {
+        transform: translate(-50%, -50%) translateX(5%) translateY(95%) scale(1.0) rotateY(0deg);
+    }
+    30% {
+        transform: translate(-50%, -50%) translateX(-45%) translateY(-55%) scale(1.05) rotateY(0deg);
+    }
+    31% {
+        transform: translate(-50%, -50%) translateX(-45%) translateY(-55%) scale(1.05) rotateY(180deg);
+    }
+    45% {
+        transform: translate(-50%, -50%) translateX(20%) translateY(55%) scale(1.0) rotateY(180deg);
+    }
+    60% {
+        transform: translate(-50%, -50%) translateX(55%) translateY(35%) scale(0.95) rotateY(180deg);
+    }
+    70% {
+        transform: translate(-50%, -50%) translateX(60%) translateY(-10%) scale(0.9) rotateY(180deg);
+    }
+    71% {
+        transform: translate(-50%, -50%) translateX(60%) translateY(-10%) scale(0.9) rotateY(180deg);
+    }
+    80% {
+        transform: translate(-50%, -50%) translateX(100%) translateY(-35%) scale(0.95) rotateY(180deg);
+    }
+    89% {
+        transform: translate(-50%, -50%) translateX(130%) translateY(-55%) scale(0.9) rotateY(180deg);
+    }
+    90% {
+        transform: translate(-50%, -50%) translateX(130%) translateY(-55%) scale(1.05) rotateY(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateX(55%) translateY(-30%) scale(0.85) rotateY(0deg);
+    }
+}
+
+/* Utilidad para selección de texto */
+::selection {
+    background-color: #06b6d4;
+    color: #0f172a;
+}
+
+.hero-divided {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 20;
+}
+
+.hero-shark-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.shark-side {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    opacity: 0.9;
+    animation: sharkSideSwim 20s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.5));
+}
+
+@keyframes sharkSideSwim {
+    0% { 
+        transform: translateX(10%) translateY(-5%) scale(0.95) rotateY(0deg); 
+    }
+    25% { 
+        transform: translateX(-5%) translateY(8%) scale(1.0) rotateY(0deg); 
+    }
+    50% { 
+        transform: translateX(-15%) translateY(-3%) scale(0.9) rotateY(0deg); 
+    }
+    51% { 
+        transform: translateX(-15%) translateY(-3%) scale(0.9) rotateY(180deg); 
+    }
+    75% { 
+        transform: translateX(0%) translateY(5%) scale(1.0) rotateY(180deg); 
+    }
+    100% { 
+        transform: translateX(10%) translateY(-5%) scale(0.95) rotateY(180deg); 
+    }
+}
+
+/* SOLUCIÓN DEFINITIVA FIREFOX MOBILE - PARPADEO */
+/* Reset completo para elementos problemáticos en Firefox */
+@-moz-document url-prefix() {
+    #mobile-menu {
+        position: fixed !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        will-change: auto !important;
+        backface-visibility: visible !important;
+        perspective: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: none;
+    }
+    
+    #mobile-menu:not(.hidden) {
+        display: block !important;
+    }
+    
+    a[href*="wa.me"] {
+        position: fixed !important;
+        bottom: 24px !important;
+        right: 24px !important;
+        transform: none !important;
+        will-change: auto !important;
+        backface-visibility: visible !important;
+        perspective: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 9999 !important;
+    }
+    
+    /* Prevenir cualquier animación/transición problemática */
+    #mobile-menu,
+    a[href*="wa.me"],
+    #mobile-menu-btn {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* CORRECCIONES MÓVIL - TEXTO COMPLETO */
+@media (max-width: 768px) {
+    /* HERO SECTION - Texto completo y legible */
+    #hero .space-y-8 {
+        space-y: 1.5rem !important;
+    }
+    
+    #hero h1 {
+        font-size: 2.8rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1rem !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    #hero p {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 2rem !important;
+        max-width: 100% !important;
+        padding: 0 0.5rem;
+    }
+    
+    /* Botones más compactos pero visibles */
+    #hero .flex.flex-wrap {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    #hero button {
+        width: 100%;
+        max-width: 300px;
+        padding: 1rem 2rem !important;
+        font-size: 1rem !important;
+        margin: 0 auto;
+        white-space: nowrap;
+    }
+    
+    /* SERVICIOS SECTION - Centrado completo */
+    #servicios {
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    #servicios .grid {
+        justify-items: center;
+        gap: 1.5rem;
+    }
+    
+    #servicios .bg-slate-800 {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    #servicios h3 {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    
+    #servicios ul {
+        text-align: left;
+        display: inline-block;
+        margin: 0 auto;
+    }
+    
+    /* Tiburón en móvil */
+    .shark-bg {
+        width: 50%;
+        opacity: 0.4;
+    }
+    
+    /* Asegurar que el contenedor ocupe todo el ancho */
+    #hero .container {
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    #hero .text-left {
+        text-align: center !important;
+    }
+    
+    #hero .justify-start {
+        justify-content: center !important;
+    }
+    
+    /* CORRECCIÓN ESPECÍFICA FIREFOX MOBILE */
+    @-moz-document url-prefix() {
+        #mobile-menu {
+            position: fixed;
+            top: 100%;
+            transform: translateY(0);
+        }
+        
+        a[href*="wa.me"] {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
+}
+
+/* CORRECCIÓN CUADROS DE SERVICIOS - MISMO TAMAÑO */
+#servicios .bg-slate-800 {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#servicios .bg-slate-800 .w-12 {
+    flex-shrink: 0;
+}
+
+#servicios .bg-slate-800 h3 {
+    flex-shrink: 0;
+}
+
+#servicios .bg-slate-800 ul {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#servicios .bg-slate-800 li {
+    flex: 1;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+/* Responsive adicional */
+@media (max-width: 1024px) {
+    .shark-bg {
+        width: 30%;
+        left: 70%;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para pantallas muy pequeñas */
+    #hero h1 {
+        font-size: 2.2rem !important;
+        padding: 0 0.5rem;
+    }
+    
+    #hero p {
+        font-size: 1rem !important;
+        padding: 0 0.5rem;
+    }
+    
+    #servicios .bg-slate-800 {
+        max-width: 100%;
+        padding: 1.25rem;
+        min-height: 280px;
+    }
+    
+    .shark-bg {
+        width: 55%;
+        opacity: 0.35;
+    }
+}
+
+/* PREVENCIÓN GENERAL DE LAYOUT SHIFT */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ESTILOS NORMALES PARA OTROS NAVEGADORES */
+#mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ESTILOS PARA BOTÓN FLOTANTE DE WHATSAPP */
+.fixed.bottom-6.right-6[href*="wa.me"] {
+    background: #22c55e !important; /* green-500 */
+    border: none !important;
+    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.3) !important;
+    padding: 12px !important;
+}
+
+.fixed.bottom-6.right-6[href*="wa.me"]:hover {
+    background: #16a34a !important; /* green-600 */
+    transform: scale(1.1) !important;
+}
+
+/* ESTILOS PARA BOTÓN DE WHATSAPP EN SECCIÓN CONTACTO - MISMOS COLORES */
+#contacto a[href*="wa.me"] svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Tamaños de íconos */
+.fixed.bottom-6.right-6[href*="wa.me"] svg {
+    width: 24px;
+    height: 24px;
+}
+
+#contacto .mt-8 a[href*="wa.me"] svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Posición fija para el botón flotante */
+a[href*="wa.me"].fixed {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+}
