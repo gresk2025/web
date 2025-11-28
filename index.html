@@ -1,356 +1,433 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GResk - Soluciones Integrales</title>
-    
+
     <!-- Favicon -->
-<!-- Favicon -->
-<link rel="icon" href="icon.png" type="image/png">
-<link rel="shortcut icon" href="icon.png" type="image/png">
-<link rel="apple-touch-icon" href="icon.png">
-    
+    <!-- Favicon -->
+    <link rel="icon" href="icon.png" type="image/png">
+    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="bg-slate-900 text-slate-200 font-sans overflow-x-hidden flex flex-col min-h-screen">
 
-<!-- NAVBAR -->
-<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-slate-900">
-    <div class="container mx-auto px-6 flex justify-between items-center">
-        <!-- Logo Navbar -->
-        <button onclick="scrollToSection('hero', event)" class="h-12 cursor-pointer focus:outline-none transition-transform hover:scale-105" aria-label="GResk Home">
-            <img src="logo.png" alt="GResk Logo" class="h-full w-auto" id="navbar-logo">
-        </button>
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-slate-900">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo Navbar -->
+            <button onclick="scrollToSection('hero', event)"
+                class="h-12 cursor-pointer focus:outline-none transition-transform hover:scale-105"
+                aria-label="GResk Home">
+                <img src="logo.png" alt="GResk Logo" class="h-full w-auto" id="navbar-logo">
+            </button>
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8 items-center">
-            <button onclick="scrollToSection('servicios', event)" class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Servicios</button>
-            <button onclick="scrollToSection('ia', event)" class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">IA & Tech</button>
-            <button onclick="scrollToSection('contacto', event)" class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Contacto</button>
-            
-            <!-- Nuevo botón Proyecto Lototrebol -->
-            <a href="http://www.lototrebol.com" class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Proyecto Lototrebol</a>
-            
-            <!-- Redes Sociales -->
-            <div class="flex space-x-4 ml-4">
-                <a href="https://www.instagram.com/greskvzla/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Instagram">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                </a>
-                <a href="https://www.tiktok.com/@greskvzla" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="TikTok">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
-                </a>
-                <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Facebook">
-                    <i data-lucide="facebook" class="w-5 h-5"></i>
-                </a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <button onclick="scrollToSection('servicios', event)"
+                    class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Servicios</button>
+                <button onclick="scrollToSection('ia', event)"
+                    class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">IA
+                    & Tech</button>
+                <button onclick="scrollToSection('contacto', event)"
+                    class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Contacto</button>
+
+                <!-- Nuevo botón Proyecto Lototrebol -->
+                <a href="http://www.lototrebol.com"
+                    class="text-sm font-medium hover:text-cyan-400 transition-colors uppercase tracking-wide focus:outline-none">Proyecto
+                    Lototrebol</a>
+
+                <!-- Redes Sociales -->
+                <div class="flex space-x-4 ml-4">
+                    <a href="https://www.instagram.com/greskvzla/" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Instagram">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@greskvzla" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Facebook">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                </div>
             </div>
+
+            <!-- Mobile Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
         </div>
 
-        <!-- Mobile Toggle Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-            <i data-lucide="menu" class="w-7 h-7"></i>
-        </button>
-    </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-full left-0 w-full bg-slate-800 border-b border-slate-700 shadow-2xl">
+            <div class="flex flex-col p-6 space-y-4">
+                <button onclick="scrollToSection('servicios', event)"
+                    class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Servicios</button>
+                <button onclick="scrollToSection('ia', event)"
+                    class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">IA & Tech</button>
+                <button onclick="scrollToSection('contacto', event)"
+                    class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Contacto</button>
 
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-slate-800 border-b border-slate-700 shadow-2xl">
-        <div class="flex flex-col p-6 space-y-4">
-            <button onclick="scrollToSection('servicios', event)" class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Servicios</button>
-            <button onclick="scrollToSection('ia', event)" class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">IA & Tech</button>
-            <button onclick="scrollToSection('contacto', event)" class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Contacto</button>
-            
-            <!-- Nuevo enlace Proyecto Lototrebol para móvil -->
-            <a href="/loto/index.html" class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Proyecto Lototrebol</a>
-            
-            <!-- Redes Sociales Móvil -->
-            <div class="flex space-x-4 justify-center pt-4">
-                <a href="https://www.instagram.com/apt.install.gabriel" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Instagram">
+                <!-- Nuevo enlace Proyecto Lototrebol para móvil -->
+                <a href="/loto/index.html"
+                    class="text-left text-lg font-medium hover:text-cyan-400 focus:outline-none">Proyecto Lototrebol</a>
+
+                <!-- Redes Sociales Móvil -->
+                <div class="flex space-x-4 justify-center pt-4">
+                    <a href="https://www.instagram.com/apt.install.gabriel" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Instagram">
+                        <i data-lucide="instagram" class="w-6 h-6"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@gabrielresk" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Facebook">
+                        <i data-lucide="facebook" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION CORREGIDA -->
+    <section id="hero" class="relative h-screen flex items-center px-4 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none">
+        </div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none">
+        </div>
+
+        <!-- SHARK BACKGROUND -->
+        <img src="logo.png" alt="GResk Shark Background" class="shark-bg" id="shark-logo">
+
+        <!-- CONTENIDO CENTRADO EN MÓVIL -->
+        <div class="container mx-auto relative z-10 w-full px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Columna Izquierda - Texto -->
+                <div class="space-y-6 animate-fade-in-up text-center lg:text-left">
+                    <div
+                        class="inline-block px-4 py-1 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-sm font-bold tracking-wider backdrop-blur-sm">
+                        GABRIEL RAZOUK RESK
+                    </div>
+                    <h1 class="text-4xl md:text-7xl font-black text-white leading-tight drop-shadow-xl break-words">
+                        Domina el <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
+                            Océano Digital
+                        </span>
+                    </h1>
+                    <p
+                        class="text-lg md:text-xl text-slate-300 max-w-2xl drop-shadow-md leading-relaxed mx-auto lg:mx-0">
+                        Especialista en Sistemas & Forjador Tecno-Creativo.
+                        Desde la infraestructura de redes hasta el diseño visual más impactante.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
+                        <button onclick="scrollToSection('contacto', event)"
+                            class="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-lg transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(6,182,212,0.4)] focus:outline-none text-base whitespace-nowrap">
+                            Contratar Servicios
+                        </button>
+                        <button onclick="scrollToSection('servicios', event)"
+                            class="px-8 py-4 border border-slate-600 hover:border-cyan-500 text-white bg-slate-900/50 backdrop-blur-sm rounded-lg transition-all hover:bg-slate-800 focus:outline-none text-base whitespace-nowrap">
+                            Ver Ecosistema
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha - Espacio para el tiburón -->
+                <div class="hidden lg:block relative">
+                    <!-- El tiburón se mueve en esta área -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="servicios" class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-cyan-500 tracking-widest uppercase mb-2">Ecosistema GResk</h2>
+                <h3 class="text-3xl md:text-4xl font-black text-white">Soluciones Creativas y Tecnologicas</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Cards -->
+                <!-- Diseño -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="palette" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Diseño &
+                        Branding</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Logotipos e Imagen
+                            Corporativa</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Diseño Gráfico
+                            Publicitario</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Material POP (Lanyards,
+                            Carnets)</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Gestión de Redes Sociales
+                            (SMM)</li>
+                    </ul>
+                </div>
+                <!-- Desarrollo -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="monitor" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Desarrollo
+                        Web</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Landing Pages Responsivas
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sitios Corporativos</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Optimización UX/UI</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Soluciones a medida</li>
+                    </ul>
+                </div>
+                <!-- Estampado -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="shirt" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Estampado
+                        & Merch</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Personalizacion de
+                            Prendas</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sublimación de Tazas</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Artículos Promocionales
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Personalización de
+                            Accesorios</li>
+                    </ul>
+                </div>
+                <!-- Soporte -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="wrench" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Soporte TI
+                        & Redes</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Mantenimiento de
+                            Computadoras</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Instalación de Redes
+                            (LAN/WLAN)</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Configuración de
+                            Servidores</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sistemas Operativos</li>
+                    </ul>
+                </div>
+                <!-- CCTV -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="camera" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Seguridad
+                        CCTV</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Instalación de Cámaras
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Configuración de DVR/NVR
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Monitoreo Remoto</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Mantenimiento de Sistemas
+                        </li>
+                    </ul>
+                </div>
+                <!-- Tienda -->
+                <div
+                    class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
+                    <div
+                        class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
+                        <i data-lucide="shopping-cart" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Tienda
+                        Tech</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Venta de Accesorios de PC
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Periféricos Gaming y
+                            Oficina</li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Repuestos y Componentes
+                        </li>
+                        <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Asesoría de Compra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI SECTION -->
+    <section id="ia" class="py-20 bg-gradient-to-b from-slate-900 to-blue-950/40 relative border-y border-slate-800/50">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="flex items-center gap-2 mb-4 text-cyan-400">
+                        <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+                        <span class="font-bold text-xl tracking-wider">AI ENTHUSIAST</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-white mb-6">
+                        El Futuro es <br />Generativo
+                    </h2>
+                    <p class="text-slate-300 text-lg mb-6">
+                        Inteligencia aplicada al ahora, estrategia para el futuro. Como consultor y entusiasta de la
+                        Inteligencia Artificial, integro herramientas de última generación en mis flujos de trabajo.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                            <i data-lucide="palette" class="text-purple-400 mr-3 w-5 h-5"></i>
+                            <span>Creación de imágenes artísticas con IA</span>
+                        </li>
+                        <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                            <i data-lucide="video" class="text-pink-400 mr-3 w-5 h-5"></i>
+                            <span>Edición y generación de video asistida por IA</span>
+                        </li>
+                        <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                            <i data-lucide="cpu" class="text-cyan-400 mr-3 w-5 h-5"></i>
+                            <span>Optimización de flujos de trabajo digitales</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <!-- Decorative AI Element REMOVED -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contacto" class="py-20 bg-slate-900 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-black text-white mb-8">¿Listo para elevar tu empresa o emprendimiento?</h2>
+            <p class="text-xl text-slate-400 mb-10">
+                Conexiones estables e identidad profesional. La base digital necesaria para multiplicar tus resultados.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6 mb-12">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/584244583787" target="_blank" rel="noopener noreferrer"
+                    class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group"
+                    aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893-.001-3.189-1.262-6.187-3.55-8.444" />
+                    </svg>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/greskvzla" target="_blank" rel="noopener noreferrer"
+                    class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group"
+                    aria-label="Instagram">
                     <i data-lucide="instagram" class="w-6 h-6"></i>
                 </a>
-                <a href="https://www.tiktok.com/@gabrielresk" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="TikTok">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@greskvzla" target="_blank" rel="noopener noreferrer"
+                    class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group"
+                    aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="w-6 h-6">
+                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                    </svg>
                 </a>
-                <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors" aria-label="Facebook">
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer"
+                    class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group"
+                    aria-label="Facebook">
                     <i data-lucide="facebook" class="w-6 h-6"></i>
                 </a>
             </div>
         </div>
-    </div>
-</nav>
+    </section>
 
-<!-- HERO SECTION CORREGIDA -->
-<section id="hero" class="relative h-screen flex items-center px-4 overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute top-0 right-0 w-1/2 h-full bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+    <!-- FOOTER -->
+    <footer class="py-12 bg-slate-950 border-t border-slate-800 text-slate-500 text-sm">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
 
-    <!-- SHARK BACKGROUND -->
-    <img 
-        src="logo.png" 
-        alt="GResk Shark Background" 
-        class="shark-bg"
-        id="shark-logo"
-    >
-
-    <!-- CONTENIDO CENTRADO EN MÓVIL -->
-    <div class="container mx-auto relative z-10 w-full px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- Columna Izquierda - Texto -->
-            <div class="space-y-6 animate-fade-in-up text-center lg:text-left">
-                <div class="inline-block px-4 py-1 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-sm font-bold tracking-wider backdrop-blur-sm">
-                    GABRIEL RAZOUK RESK
-                </div>
-                <h1 class="text-4xl md:text-7xl font-black text-white leading-tight drop-shadow-xl break-words">
-                    Domina el <br />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
-                        Océano Digital
-                    </span>
-                </h1>
-                <p class="text-lg md:text-xl text-slate-300 max-w-2xl drop-shadow-md leading-relaxed mx-auto lg:mx-0">
-                    Especialista en Sistemas & Forjador Tecno-Creativo. 
-                    Desde la infraestructura de redes hasta el diseño visual más impactante.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
-                    <button onclick="scrollToSection('contacto', event)" class="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-lg transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(6,182,212,0.4)] focus:outline-none text-base whitespace-nowrap">
-                        Contratar Servicios
-                    </button>
-                    <button onclick="scrollToSection('servicios', event)" class="px-8 py-4 border border-slate-600 hover:border-cyan-500 text-white bg-slate-900/50 backdrop-blur-sm rounded-lg transition-all hover:bg-slate-800 focus:outline-none text-base whitespace-nowrap">
-                        Ver Ecosistema
-                    </button>
-                </div>
-            </div>
-
-            <!-- Columna Derecha - Espacio para el tiburón -->
-            <div class="hidden lg:block relative">
-                <!-- El tiburón se mueve en esta área -->
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SERVICES SECTION -->
-<section id="servicios" class="py-20 px-6">
-    <div class="container mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-sm font-bold text-cyan-500 tracking-widest uppercase mb-2">Ecosistema GResk</h2>
-            <h3 class="text-3xl md:text-4xl font-black text-white">Soluciones Creativas y Tecnologicas</h3>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Service Cards -->
-            <!-- Diseño -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="palette" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Diseño & Branding</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Logotipos e Imagen Corporativa</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Diseño Gráfico Publicitario</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Material POP (Lanyards, Carnets)</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Gestión de Redes Sociales (SMM)</li>
-                </ul>
-            </div>
-            <!-- Desarrollo -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="monitor" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Desarrollo Web</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Landing Pages Responsivas</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sitios Corporativos</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Optimización UX/UI</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Soluciones a medida</li>
-                </ul>
-            </div>
-            <!-- Estampado -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="shirt" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Estampado & Merch</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Personalizacion de Prendas</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sublimación de Tazas</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Artículos Promocionales</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Personalización de Accesorios</li>
-                </ul>
-            </div>
-            <!-- Soporte -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="wrench" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Soporte TI & Redes</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Mantenimiento de Computadoras</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Instalación de Redes (LAN/WLAN)</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Configuración de Servidores</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Sistemas Operativos</li>
-                </ul>
-            </div>
-            <!-- CCTV -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="camera" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Seguridad CCTV</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Instalación de Cámaras</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Configuración de DVR/NVR</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Monitoreo Remoto</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Mantenimiento de Sistemas</li>
-                </ul>
-            </div>
-            <!-- Tienda -->
-            <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group h-full">
-                <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cyan-500 transition-colors duration-300">
-                    <i data-lucide="shopping-cart" class="text-cyan-400 group-hover:text-slate-900 w-6 h-6"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Tienda Tech</h3>
-                <ul class="space-y-2 text-slate-300 text-sm">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Venta de Accesorios de PC</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Periféricos Gaming y Oficina</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Repuestos y Componentes</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-2">▸</span> Asesoría de Compra</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- AI SECTION -->
-<section id="ia" class="py-20 bg-gradient-to-b from-slate-900 to-blue-950/40 relative border-y border-slate-800/50">
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <div class="flex items-center gap-2 mb-4 text-cyan-400">
-                    <i data-lucide="brain-circuit" class="w-8 h-8"></i>
-                    <span class="font-bold text-xl tracking-wider">AI ENTHUSIAST</span>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-black text-white mb-6">
-                    El Futuro es <br/>Generativo
-                </h2>
-                <p class="text-slate-300 text-lg mb-6">
-                    Inteligencia aplicada al ahora, estrategia para el futuro. Como consultor y entusiasta de la Inteligencia Artificial, integro herramientas de última generación en mis flujos de trabajo.
-                </p>
-                <ul class="space-y-4">
-                    <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
-                        <i data-lucide="palette" class="text-purple-400 mr-3 w-5 h-5"></i>
-                        <span>Creación de imágenes artísticas con IA</span>
-                    </li>
-                    <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
-                        <i data-lucide="video" class="text-pink-400 mr-3 w-5 h-5"></i>
-                        <span>Edición y generación de video asistida por IA</span>
-                    </li>
-                    <li class="flex items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
-                        <i data-lucide="cpu" class="text-cyan-400 mr-3 w-5 h-5"></i>
-                        <span>Optimización de flujos de trabajo digitales</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <!-- Decorative AI Element -->
-                <div class="relative w-80 h-80">
-                    <div class="absolute inset-0 bg-cyan-500 rounded-full opacity-20 animate-ping"></div>
-                    <div class="absolute inset-4 bg-blue-600 rounded-full opacity-20 animate-pulse delay-75"></div>
-                    <div class="absolute inset-0 flex items-center justify-center border border-cyan-500/30 rounded-full backdrop-blur-sm bg-slate-900/30">
-                        <i data-lucide="brain-circuit" class="w-32 h-32 text-cyan-100 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]"></i>
+                <!-- Columna 1: Marca y Filosofía -->
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img src="logo.png" alt="GResk Mini Logo" class="h-8 w-auto" id="footer-logo">
+                        <span class="text-lg font-bold text-white">GResk</span>
                     </div>
+                    <p class="max-w-xs">
+                        "En el vasto océano de la tecnología, detenerse significa hundirse.<br />
+                        El tiburón representa el movimiento perpetuo, la eficiencia y el instinto de supervivencia."
+                    </p>
+                </div>
+
+                <!-- Columna 2: Enlaces Rápidos -->
+                <div class="flex flex-col items-center space-y-2">
+                    <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Navegación</h4>
+                    <button onclick="scrollToSection('hero', event)"
+                        class="hover:text-cyan-400 transition-colors focus:outline-none">Inicio</button>
+                    <button onclick="scrollToSection('servicios', event)"
+                        class="hover:text-cyan-400 transition-colors focus:outline-none">Servicios</button>
+                    <button onclick="scrollToSection('ia', event)"
+                        class="hover:text-cyan-400 transition-colors focus:outline-none">IA & Tech</button>
+                    <button onclick="scrollToSection('contacto', event)"
+                        class="hover:text-cyan-400 transition-colors focus:outline-none">Contacto</button>
+                </div>
+
+                <!-- Columna 3: Legal / Contacto -->
+                <div class="flex flex-col items-center space-y-2">
+                    <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Información</h4>
+                    <p id="year-text"></p>
+                    <p>Valencia, Venezuela</p>
+                    <p class="text-cyan-600 text-xs mt-4">Diseñado por GResk.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- CONTACT SECTION -->
-<section id="contacto" class="py-20 bg-slate-900 px-6">
-    <div class="container mx-auto max-w-4xl text-center">
-        <h2 class="text-4xl font-black text-white mb-8">¿Listo para elevar tu empresa o emprendimiento?</h2>
-        <p class="text-xl text-slate-400 mb-10">
-            Conexiones estables e identidad profesional. La base digital necesaria para multiplicar tus resultados.
-        </p>
-        
-        <div class="flex flex-wrap justify-center gap-6 mb-12">
-<!-- WhatsApp -->
-<a href="https://wa.me/584244583787" target="_blank" rel="noopener noreferrer" class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893-.001-3.189-1.262-6.187-3.55-8.444"/>
-    </svg>
-</a>
-            
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/greskvzla" target="_blank" rel="noopener noreferrer" class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group" aria-label="Instagram">
-                <i data-lucide="instagram" class="w-6 h-6"></i>
-            </a>
-            
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/@greskvzla" target="_blank" rel="noopener noreferrer" class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group" aria-label="TikTok">
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/gabriel.r.resk" target="_blank" rel="noopener noreferrer" class="p-3 bg-slate-800 hover:bg-cyan-500 hover:text-slate-900 text-cyan-400 rounded-full transition-all duration-300 transform hover:scale-110 group" aria-label="Facebook">
-                <i data-lucide="facebook" class="w-6 h-6"></i>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="py-12 bg-slate-950 border-t border-slate-800 text-slate-500 text-sm">
-    <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            
-            <!-- Columna 1: Marca y Filosofía -->
-            <div class="flex flex-col items-center space-y-4">
-                <div class="flex items-center space-x-2 mb-4">
-                    <img src="logo.png" alt="GResk Mini Logo" class="h-8 w-auto" id="footer-logo">
-                    <span class="text-lg font-bold text-white">GResk</span>
-                </div>
-                <p class="max-w-xs">
-                    "En el vasto océano de la tecnología, detenerse significa hundirse.<br/>
-                    El tiburón representa el movimiento perpetuo, la eficiencia y el instinto de supervivencia."
-                </p>
-            </div>
-
-            <!-- Columna 2: Enlaces Rápidos -->
-            <div class="flex flex-col items-center space-y-2">
-                <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Navegación</h4>
-                <button onclick="scrollToSection('hero', event)" class="hover:text-cyan-400 transition-colors focus:outline-none">Inicio</button>
-                <button onclick="scrollToSection('servicios', event)" class="hover:text-cyan-400 transition-colors focus:outline-none">Servicios</button>
-                <button onclick="scrollToSection('ia', event)" class="hover:text-cyan-400 transition-colors focus:outline-none">IA & Tech</button>
-                <button onclick="scrollToSection('contacto', event)" class="hover:text-cyan-400 transition-colors focus:outline-none">Contacto</button>
-            </div>
-
-            <!-- Columna 3: Legal / Contacto -->
-            <div class="flex flex-col items-center space-y-2">
-                <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Información</h4>
-                <p id="year-text"></p>
-                <p>Valencia, Venezuela</p>
-                <p class="text-cyan-600 text-xs mt-4">Diseñado por GResk.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- FLOATING WHATSAPP BUTTON - SOLO ICONO -->
-<a href="https://wa.me/584244583787" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg shadow-green-500/30 transition-all transform hover:scale-110 flex items-center justify-center" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893-.001-3.189-1.262-6.187-3.55-8.444"/>
-    </svg>
-</a>
+    <!-- FLOATING WHATSAPP BUTTON - SOLO ICONO -->
+    <a href="https://wa.me/584244583787" target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg shadow-green-500/30 transition-all transform hover:scale-110 flex items-center justify-center"
+        aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893-.001-3.189-1.262-6.187-3.55-8.444" />
+        </svg>
+    </a>
 
 
-<!-- Scripts Logic -->
-<script src="script.js"></script>
+    <!-- Scripts Logic -->
+    <script src="script.js"></script>
 </body>
+
 </html>
