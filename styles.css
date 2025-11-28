@@ -307,7 +307,7 @@
         gap: 1.5rem;
     }
 
-    #servicios .bg-slate-800 {
+    #servicios .grid>div {
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
@@ -366,29 +366,30 @@
 }
 
 /* CORRECCIÓN CUADROS DE SERVICIOS - MISMO TAMAÑO */
-#servicios .bg-slate-800 {
+#servicios .grid>div {
     min-height: 300px;
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
-#servicios .bg-slate-800 .w-12 {
+#servicios .grid>div .w-12 {
     flex-shrink: 0;
 }
 
-#servicios .bg-slate-800 h3 {
+#servicios .grid>div h3 {
     flex-shrink: 0;
 }
 
-#servicios .bg-slate-800 ul {
+#servicios .grid>div ul {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-#servicios .bg-slate-800 li {
+#servicios .grid>div li {
     flex: 1;
     min-height: 28px;
     display: flex;
@@ -417,7 +418,7 @@
         padding: 0 0.5rem;
     }
 
-    #servicios .bg-slate-800 {
+    #servicios .grid>div {
         max-width: 100%;
         padding: 1.25rem;
         min-height: 280px;
