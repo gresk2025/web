@@ -41,20 +41,21 @@
     background-repeat: no-repeat;
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 600px;
+    height: auto;
     overflow: hidden;
     display: flex;
     align-items: center;
-    padding: 0;
+    padding: 8rem 0 4rem 0;
 }
 
 @media (max-width: 768px) {
     #hero {
         height: auto !important;
-        min-height: 100vh;
-        padding-top: 6rem;
+        min-height: auto;
+        padding-top: 8rem;
         /* Espacio para navbar */
-        padding-bottom: 4rem;
+        padding-bottom: 1rem;
     }
 }
 
