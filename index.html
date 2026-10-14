@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Gresk — Gabriel Resk | Especialista en Sistemas & Forjador Tecno-Creativo</title>
+  <meta name="description" content="Gresk — Gabriel Resk. Especialista en Sistemas & Forjador Tecno-Creativo. Diseño & Branding, Desarrollo Web, Soporte TI & Redes, IA & Automatización.">
+  <meta name="theme-color" content="#050608">
+
+  <!-- OpenGraph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gresk — Gabriel Resk | Especialista en Sistemas & Forjador Tecno-Creativo">
+  <meta property="og:description" content="El Futuro es Generativo: Inteligencia aplicada al ahora, estrategia para el futuro.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Cinematic Glow -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Preloader Screen with Real-Time Buffer Progress -->
+  <aside id="preloader" role="progressbar" aria-label="Cargando experiencia" aria-valuemin="0" aria-valuemax="100">
+    <div class="loader-glow-orb">
+      <div class="loader-orb-ring"></div>
+      <div class="loader-orb-core"></div>
+    </div>
+    <div class="loader-text-wrap">
+      <h1 class="loader-title">Gresk Vision</h1>
+      <p id="loader-status" class="loader-status">Iniciando streaming de buffer visual...</p>
+    </div>
+    <div class="loader-progress-track">
+      <div id="loader-progress" class="loader-progress-bar"></div>
+    </div>
+    <span id="loader-percent" class="loader-percent">0%</span>
+  </aside>
+
+  <!-- Canvas Stage (Fixed Fullscreen Render Area) -->
+  <main id="canvas-stage" aria-label="Visualizador cinemático 3D">
+    <canvas id="scroll-canvas"></canvas>
+    <div class="canvas-vignette" aria-hidden="true"></div>
+  </main>
+
+  <!-- Virtual Scroll Track (Gives Native Scroll Mechanics) -->
+  <div id="virtual-scroll-track" aria-hidden="true"></div>
+
+  <!-- HUD: Header Navigation -->
+  <header class="main-header">
+    <a href="#" class="brand-container" id="brand-logo-btn" title="Gresk - Volver al Inicio" aria-label="Inicio">
+      <img src="logo.png" alt="Gresk Logo" class="brand-logo-img">
+    </a>
+
+    <!-- Top Menu for Services -->
+    <nav class="main-nav" aria-label="Menú principal de servicios">
+      <button class="nav-item-btn" data-target-frame="95">IA & Automatización</button>
+      <button class="nav-item-btn" data-target-frame="147">Desarrollo Web</button>
+      <button class="nav-item-btn" data-target-frame="183">Diseño & Branding</button>
+      <button class="nav-item-btn" data-target-frame="220">Soporte TI & Redes</button>
+      <button class="nav-item-btn" data-target-frame="265">Portafolio & Contacto</button>
+    </nav>
+
+    <!-- Header Right Actions & Social Links -->
+    <nav class="header-actions" aria-label="Enlaces sociales y controles">
+      <a href="https://wa.me/584124090210" target="_blank" rel="noopener noreferrer" class="icon-btn whatsapp-btn" title="WhatsApp: 04124090210" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+      </a>
+      <a href="https://instagram.com/greskvzla" target="_blank" rel="noopener noreferrer" class="icon-btn instagram-btn" title="Instagram: @greskvzla" aria-label="Instagram">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </a>
+
+      <div class="header-status-pill">
+        <span id="frame-counter" class="frame-metric">FRAME 001 / 271</span>
+      </div>
+
+      <button id="btn-sound" class="icon-btn" title="Activar/Desactivar sonido háptico" aria-label="Sonido" style="opacity: 0.5;">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+      <button id="btn-fullscreen" class="icon-btn" title="Pantalla completa" aria-label="Pantalla completa">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Interactive Storytelling Overlays -->
+  <section id="story-overlays" aria-live="polite">
+
+    <!-- Card 1: Bio / Entrada (Frames 0 - 17) -->
+    <article class="story-card" id="card-bio" data-card="bio" data-align="left">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Gresk - Gabriel Resk</span>
+      </div>
+      <div class="story-subtitle">Especialista en Sistemas & Forjador Tecno-Creativo</div>
+      <h2>El Futuro es Generativo:</h2>
+      <p>Inteligencia aplicada al ahora, estrategia para el futuro. Como consultor y entusiasta de la Inteligencia Artificial, integro herramientas de última generación en mis flujos de trabajo.</p>
+    </article>
+
+    <!-- Card 2: IA & Automatización (Frames 80 - 123, Plena vista frame 95) -->
+    <article class="story-card" id="card-ia" data-card="ia" data-align="left">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Servicio // IA</span>
+      </div>
+      <h2>IA & Automatización</h2>
+      <ul class="service-items-list">
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Reels creativos e impactantes hechos con IA</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Automatización de redes sociales</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Automatización de flujos de trabajo</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Card 3: Desarrollo Web (Frames 124 - 155, Plena vista frame 147) -->
+    <article class="story-card" id="card-web" data-card="web" data-align="right">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Servicio // Web High-End</span>
+      </div>
+      <h2>Desarrollo Web</h2>
+      <ul class="service-items-list">
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Scroll-Driven 3D Storytelling Website</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Card 4: Diseño & Branding (Frames 156 - 210, Plena vista frame 183) -->
+    <article class="story-card" id="card-design" data-card="design" data-align="left">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Servicio // Identidad Visual</span>
+      </div>
+      <h2>Diseño & Branding</h2>
+      <ul class="service-items-list">
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Logotipos e Imagen Corporativa</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Diseño Gráfico Publicitario</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Gestión de Redes Sociales (SMM)</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Card 5: Soporte TI & Redes (Frames 211 - 250, Plena vista frame 220) -->
+    <article class="story-card" id="card-ti" data-card="ti" data-align="right">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Servicio // Infraestructura & Seguridad</span>
+      </div>
+      <h2>Soporte TI & Redes</h2>
+      <ul class="service-items-list">
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Mantenimiento de Computadoras</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Instalación de Redes (LAN/WLAN)</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Configuración de Servidores</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Sistemas Operativos</span>
+        </li>
+        <li class="service-item">
+          <span class="service-item-bullet">▸</span>
+          <span>Instalación de Cámaras de Seguridad</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Card 6: Portafolio & Contacto (Frames 251 - 288, Plena vista frame 265) -->
+    <article class="story-card" id="card-contacto" data-card="contacto" data-align="center">
+      <div class="chapter-badge">
+        <span class="chapter-badge-dot"></span>
+        <span>Gresk // Contacto & Portafolio</span>
+      </div>
+      <h2>Portafolio & Contacto</h2>
+      <div class="quote-box">
+        “En el vasto océano de la tecnología, detenerse significa hundirse. El tiburón representa el movimiento perpetuo, la eficiencia y el instinto de supervivencia.”
+      </div>
+      <div class="story-cta-group">
+        <a href="https://wa.me/584124090210" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-cta" title="Contactar por WhatsApp">
+          <svg viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
+          <span>WhatsApp: 04124090210</span>
+        </a>
+        <a href="#" class="btn-secondary" title="Ver Portafolios">
+          <span>Ver Portafolio</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm5 16H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- HUD: Chapter Timeline Rail (Right Side) -->
+  <nav id="timeline-rail" aria-label="Navegación rápida de secciones">
+    <button class="rail-node active" data-target-frame="0" title="01 Entrada / Bio" aria-label="01 Entrada">
+      <span class="rail-tooltip">01 Entrada</span>
+      <span class="rail-dot"></span>
+    </button>
+    <button class="rail-node" data-target-frame="95" title="IA & Automatización" aria-label="IA & Automatización">
+      <span class="rail-tooltip">IA & Auto</span>
+      <span class="rail-dot"></span>
+    </button>
+    <button class="rail-node" data-target-frame="147" title="Desarrollo Web" aria-label="Desarrollo Web">
+      <span class="rail-tooltip">Desarrollo Web</span>
+      <span class="rail-dot"></span>
+    </button>
+    <button class="rail-node" data-target-frame="183" title="Diseño & Branding" aria-label="Diseño & Branding">
+      <span class="rail-tooltip">Diseño & Branding</span>
+      <span class="rail-dot"></span>
+    </button>
+    <button class="rail-node" data-target-frame="220" title="Soporte TI & Redes" aria-label="Soporte TI & Redes">
+      <span class="rail-tooltip">Soporte TI & Redes</span>
+      <span class="rail-dot"></span>
+    </button>
+    <button class="rail-node" data-target-frame="265" title="Portafolio & Contacto" aria-label="Portafolio & Contacto">
+      <span class="rail-tooltip">Contacto</span>
+      <span class="rail-dot"></span>
+    </button>
+  </nav>
+
+  <!-- HUD: Bottom Scrubber & Navigation Hints -->
+  <footer id="scrubber-container">
+    <div id="scrubber-track-wrap" class="scrubber-track-wrap" title="Arrastra para navegar por la experiencia">
+      <div class="scrubber-track">
+        <div id="scrubber-fill" class="scrubber-fill"></div>
+        <div id="scrubber-thumb" class="scrubber-thumb"></div>
+      </div>
+    </div>
+
+    <div class="bottom-info-row">
+      <div class="scroll-hint">
+        <div class="scroll-hint-mouse" aria-hidden="true">
+          <div class="scroll-hint-wheel"></div>
+        </div>
+        <span>Desliza rueda, táctil o teclas [↑ / ↓]</span>
+      </div>
+      <div class="tech-info">
+        <span>Gresk Studio // 271 Frames WebP</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Engine -->
+  <script src="js/app.js"></script>
+</body>
+</html>
