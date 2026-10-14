@@ -109,6 +109,10 @@
   const brandLogoBtn = document.getElementById('brand-logo-btn');
   const fullscreenBtn = document.getElementById('btn-fullscreen');
   const soundBtn = document.getElementById('btn-sound');
+  const mobileMenuBtn = document.getElementById('btn-mobile-menu');
+  const closeDrawerBtn = document.getElementById('btn-close-drawer');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const drawerItemBtns = document.querySelectorAll('.drawer-item-btn');
 
   // Cache card DOM references
   const cardElements = {};
@@ -162,7 +166,7 @@
     }
   }
 
-  // --- FRAME RENDERING (OBJECT-FIT COVER) ---
+  // --- FRAME RENDERING (RESPONSIVE ADAPTIVE) ---
   function drawFrame(img) {
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
@@ -171,16 +175,47 @@
     const imgWidth = img.naturalWidth;
     const imgHeight = img.naturalHeight;
 
-    const hRatio = canvasWidth / imgWidth;
-    const vRatio = canvasHeight / imgHeight;
-    const ratio = Math.max(hRatio, vRatio);
+    const isMobilePortrait = (canvasWidth / canvasHeight) < 1.05;
 
-    const destWidth = imgWidth * ratio;
-    const destHeight = imgHeight * ratio;
-    const destX = (canvasWidth - destWidth) / 2;
-    const destY = (canvasHeight - destHeight) / 2;
+    if (isMobilePortrait) {
+      // 1. Fill base dark stage
+      ctx.fillStyle = '#050608';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    ctx.drawImage(img, 0, 0, imgWidth, imgHeight, destX, destY, destWidth, destHeight);
+      // 2. Ambient background pass: zoomed to cover, softened and darkened to provide dynamic glow
+      const bgRatio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+      const bgW = imgWidth * bgRatio;
+      const bgH = imgHeight * bgRatio;
+      const bgX = (canvasWidth - bgW) / 2;
+      const bgY = (canvasHeight - bgH) / 2;
+
+      ctx.save();
+      ctx.globalAlpha = 0.35;
+      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, bgX, bgY, bgW, bgH);
+      ctx.restore();
+
+      // 3. Foreground video pass: full width 16:9, centered in upper viewing zone
+      // 100% of the video content is visible without cutting off any details!
+      const fitWidth = canvasWidth;
+      const fitHeight = canvasWidth * (imgHeight / imgWidth);
+      const fitX = 0;
+      // Positioned below header (approx 70px) and leaving space for cards below
+      const fitY = Math.max(68, Math.min(canvasHeight * 0.16, canvasHeight - fitHeight - 200));
+
+      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, fitX, fitY, fitWidth, fitHeight);
+    } else {
+      // Desktop: Edge-to-edge cinematic cover
+      const hRatio = canvasWidth / imgWidth;
+      const vRatio = canvasHeight / imgHeight;
+      const ratio = Math.max(hRatio, vRatio);
+
+      const destWidth = imgWidth * ratio;
+      const destHeight = imgHeight * ratio;
+      const destX = (canvasWidth - destWidth) / 2;
+      const destY = (canvasHeight - destHeight) / 2;
+
+      ctx.drawImage(img, 0, 0, imgWidth, imgHeight, destX, destY, destWidth, destHeight);
+    }
   }
 
   // --- STREAMING BUFFER & SMART PRELOADER ---
@@ -378,6 +413,16 @@
         }
       });
 
+      // Drawer buttons active state
+      drawerItemBtns.forEach(btn => {
+        const frameTarget = parseInt(btn.getAttribute('data-target-frame'), 10);
+        if (frameTarget === activeServiceId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
       // Timeline Rail dots active state
       railNodes.forEach(node => {
         const frameTarget = parseInt(node.getAttribute('data-target-frame'), 10);
@@ -408,6 +453,29 @@
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const targetFrame = parseInt(btn.getAttribute('data-target-frame'), 10);
+      scrollToFrame(targetFrame);
+    });
+  });
+
+  // Mobile drawer controls
+  if (mobileMenuBtn && mobileDrawer) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileDrawer.classList.add('open');
+      playHapticTone(520, 0.04);
+    });
+  }
+
+  if (closeDrawerBtn && mobileDrawer) {
+    closeDrawerBtn.addEventListener('click', () => {
+      mobileDrawer.classList.remove('open');
+    });
+  }
+
+  drawerItemBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetFrame = parseInt(btn.getAttribute('data-target-frame'), 10);
+      if (mobileDrawer) mobileDrawer.classList.remove('open');
       scrollToFrame(targetFrame);
     });
   });
