@@ -300,9 +300,11 @@
   // --- RENDER LOOP (60FPS SMOOTH LERP) ---
   function renderLoop() {
     if (isExperienceReady) {
-      // Damped smooth spring
-      const diff = targetProgress - currentProgress;
-      currentProgress += diff * 0.085;
+      if (!isNavigating) {
+        // Damped smooth spring for manual scrolling
+        const diff = targetProgress - currentProgress;
+        currentProgress += diff * 0.085;
+      }
 
       const frameFloat = currentProgress * (TOTAL_FRAMES - 1);
       const targetIndex = Math.max(0, Math.min(Math.round(frameFloat), TOTAL_FRAMES - 1));
@@ -435,18 +437,106 @@
     }
   }
 
-  // --- NAVIGATION HELPER ---
+  // --- CINEMATIC PROGRAMMATIC NAVIGATION ---
+  let navAnim = null;
+  let isNavigating = false;
+
+  function stopAutoNav() {
+    if (isNavigating) {
+      isNavigating = false;
+      if (navAnim) {
+        cancelAnimationFrame(navAnim);
+        navAnim = null;
+      }
+    }
+  }
+
+  // Smooth cinematic ease: gentle start, stable cruise, graceful settling
+  function easeInOutSine(t) {
+    return -(Math.cos(Math.PI * t) - 1) / 2;
+  }
+
   function scrollToFrame(frameNumber) {
+    stopAutoNav();
+
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const startProgress = currentProgress;
     const targetRatio = Math.max(0, Math.min(frameNumber / (TOTAL_FRAMES - 1), 1));
-    window.scrollTo({
-      top: targetRatio * maxScroll,
-      behavior: 'smooth'
-    });
+    const endProgress = targetRatio;
+
+    const frameDiff = Math.abs(endProgress - startProgress) * (TOTAL_FRAMES - 1);
+    if (frameDiff < 0.2) return;
+
+    // Human-speed cinematic pacing (relaxed & clear):
+    // ~50ms per frame (~20 fps playback rate).
+    // Traverses full sequence (0 to 265) in ~13 seconds, giving the user ample time
+    // to appreciate the 3D animation, lighting, text and models without overwhelming blur.
+    // Transitions between adjacent sections take ~1.8s to ~2.6s.
+    const msPerFrame = 50;
+    const duration = Math.min(Math.max(frameDiff * msPerFrame, 1100), 13500);
+
+    const startTime = performance.now();
+    isNavigating = true;
+
+    // Proactively preload frames ahead in the travel direction
+    const currentIdx = Math.round(startProgress * (TOTAL_FRAMES - 1));
+    const targetIdx = Math.round(endProgress * (TOTAL_FRAMES - 1));
+    const stepDir = targetIdx > currentIdx ? 1 : -1;
+    for (let k = 0; k < Math.min(45, Math.abs(targetIdx - currentIdx)); k++) {
+      const idxToLoad = currentIdx + (k * stepDir);
+      if (idxToLoad >= 0 && idxToLoad < TOTAL_FRAMES) {
+        loadSingleFrame(idxToLoad, true);
+      }
+    }
+
     playHapticTone(660, 0.06);
+
+    function navStep(now) {
+      if (!isNavigating) return;
+
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const easedT = easeInOutSine(t);
+
+      const progress = startProgress + (endProgress - startProgress) * easedT;
+      targetProgress = progress;
+      currentProgress = progress;
+
+      // Synchronize native window scroll position so scrubber and page match
+      if (maxScroll > 0) {
+        window.scrollTo(0, progress * maxScroll);
+      }
+
+      if (t < 1) {
+        navAnim = requestAnimationFrame(navStep);
+      } else {
+        isNavigating = false;
+        navAnim = null;
+        targetProgress = endProgress;
+        currentProgress = endProgress;
+        if (maxScroll > 0) {
+          window.scrollTo(0, endProgress * maxScroll);
+        }
+      }
+    }
+
+    navAnim = requestAnimationFrame(navStep);
   }
 
   // --- EVENT LISTENERS ---
+
+  // User interruption handlers (stops auto-flight if user manually scrolls, touches or drags)
+  window.addEventListener('wheel', stopAutoNav, { passive: true });
+  window.addEventListener('touchstart', (e) => {
+    if (!e.target.closest('.nav-item-btn, .drawer-item-btn, .rail-node, #brand-logo-btn, .mobile-menu-btn')) {
+      stopAutoNav();
+    }
+  }, { passive: true });
+  window.addEventListener('mousedown', (e) => {
+    if (!e.target.closest('.nav-item-btn, .drawer-item-btn, .rail-node, #brand-logo-btn, .mobile-menu-btn')) {
+      stopAutoNav();
+    }
+  });
 
   // 1. Top Menu button clicks
   navItemBtns.forEach(btn => {
@@ -499,6 +589,7 @@
 
   // 4. Native window scroll
   window.addEventListener('scroll', () => {
+    if (isNavigating) return; // Prevent scroll event from fighting cinematic nav loop
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     if (maxScroll <= 0) return;
     targetProgress = Math.max(0, Math.min(window.scrollY / maxScroll, 1));
@@ -562,11 +653,11 @@
         break;
       case 'Home':
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollToFrame(0);
         break;
       case 'End':
         e.preventDefault();
-        window.scrollTo({ top: maxScroll, behavior: 'smooth' });
+        scrollToFrame(TOTAL_FRAMES - 1);
         break;
     }
   });
