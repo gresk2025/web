@@ -73,6 +73,7 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 2;
   overflow: hidden;
   background-color: #000;
@@ -96,12 +97,12 @@ html, body {
 }
 
 /* ==========================================================================
-   VIRTUAL SCROLL TRACK
+   VIRTUAL SCROLL TRACK (Calibrated: 5% faster frame transition)
    ========================================================================== */
 #virtual-scroll-track {
   position: relative;
   width: 100%;
-  height: 750vh;
+  height: 714vh;
   z-index: 3;
   pointer-events: none;
 }
@@ -772,6 +773,10 @@ html, body {
   display: none;
 }
 
+.mobile-arrow-nav {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .main-header {
     padding: 0.85rem 1.4rem;
@@ -791,9 +796,92 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  /* Hide right side dots on mobile so they don't block the video */
+  /* Hide timeline rail and bottom scrubber on mobile */
   #timeline-rail {
     display: none !important;
+  }
+
+  #scrubber-container {
+    display: none !important;
+  }
+
+  /* Mobile Gh0ulos-Style Arrow Controls */
+  .mobile-arrow-nav {
+    position: fixed;
+    bottom: max(1.2rem, env(safe-area-inset-bottom, 1.2rem));
+    left: 0;
+    width: 100%;
+    padding: 0 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 40;
+    pointer-events: none;
+  }
+
+  .mobile-nav-arrow-btn {
+    pointer-events: auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(10, 14, 23, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.15);
+    transition: all 0.25s var(--ease-cinematic);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav-arrow-btn svg {
+    fill: currentColor;
+    transition: transform 0.2s;
+  }
+
+  .mobile-nav-arrow-btn:active {
+    transform: scale(0.92);
+    background: rgba(0, 242, 254, 0.25);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.45);
+  }
+
+  .mobile-nav-arrow-btn.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .mobile-section-indicator {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.42rem 0.95rem;
+    background: rgba(10, 14, 23, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  }
+
+  .mobile-section-indicator #mobile-current-chapter {
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .mobile-chapter-sep {
+    color: rgba(255, 255, 255, 0.35);
   }
 
   #story-overlays {
@@ -804,38 +892,42 @@ html, body {
     display: block; /* Avoid horizontal flex blowout */
   }
   
+  /* Mobile Story Cards: Translucent, floating seamlessly over 3D animation */
   .story-card {
     position: absolute !important;
     left: 1rem !important;
     right: 1rem !important;
-    bottom: 5.2rem !important;
+    bottom: 5.4rem !important;
     width: auto !important;
     max-width: calc(100vw - 2rem) !important;
     margin: 0 !important;
-    padding: 1.15rem 1.3rem !important;
+    padding: 1.15rem 1.25rem !important;
     border-radius: 20px !important;
-    background: rgba(8, 12, 20, 0.92) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 242, 254, 0.12) !important;
-    gap: 0.65rem !important;
+    background: rgba(6, 10, 18, 0.48) !important;
+    backdrop-filter: blur(14px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.13) !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 242, 254, 0.1) !important;
+    gap: 0.6rem !important;
   }
 
   .story-card h2 {
     font-size: 1.25rem !important;
     line-height: 1.22 !important;
     margin-bottom: 0.1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
   }
 
   .story-subtitle {
     font-size: 0.82rem !important;
     line-height: 1.35 !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
   }
 
   .story-card p {
     font-size: 0.84rem !important;
     line-height: 1.48 !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
   }
 
   .chapter-badge {
@@ -852,6 +944,8 @@ html, body {
     font-size: 0.8rem !important;
     padding: 0.4rem 0.65rem !important;
     border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(8px) !important;
   }
 
   .quote-box {
@@ -887,11 +981,6 @@ html, body {
 
   .bottom-info-row .tech-info {
     display: none;
-  }
-
-  #scrubber-container {
-    padding: 0.8rem 1.2rem;
-    padding-bottom: max(0.8rem, env(safe-area-inset-bottom));
   }
 }
 
