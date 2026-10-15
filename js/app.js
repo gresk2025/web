@@ -3,7 +3,8 @@
  * GRESK // SCROLL-DRIVEN 3D CINEMATIC ENGINE
  * High-Performance Canvas Sequencer with Intelligent Streaming Buffer
  * Precise Frame-by-Frame Storytelling Timing & Interactive Navigation
- * Optimized for Mobile (Memory Bounded, Solid 60FPS & Unified Full Bleed)
+ * Mobile Engine: Uncollapsed 2-Row Menu, No-Touch-Scroll Friction,
+ * Glowing Gh0ulos Arrows, Onboarding Guidance Hints & Ultra-Low GPU Profile
  * ==========================================================================
  */
 
@@ -21,14 +22,14 @@
   ];
 
   const TOTAL_FRAMES = 271; // Website sequence ends exactly at frame 271
-  const INITIAL_BUFFER_COUNT = 20; // Fast initial startup
-  const LOOKAHEAD_WINDOW = 32; // Frames to lookahead in streaming (desktop)
+  const INITIAL_BUFFER_COUNT = 18; // Fast startup
+  const LOOKAHEAD_WINDOW = 30; // Frames to lookahead in streaming (desktop)
   const CHAPTER_MILESTONES = [0, 95, 147, 183, 220, 265];
 
   // Speed calibration (5% faster than previous base: 47.6ms per frame = ~21 frames/sec)
   const MS_PER_FRAME = 47.6;
   const MAX_PROGRESS_PER_SEC = (1000 / MS_PER_FRAME) / (TOTAL_FRAMES - 1); // ~0.0778 / sec
-  const MAX_SCROLL_LEAD = 42 / (TOTAL_FRAMES - 1); // Max ~42 frames advance on a violent swipe/flick
+  const MAX_SCROLL_LEAD = 42 / (TOTAL_FRAMES - 1); // Max lead allowed per stroke
 
   // Mobile detection helper
   const isMobile = () => window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
@@ -119,15 +120,14 @@
   const brandLogoBtn = document.getElementById('brand-logo-btn');
   const fullscreenBtn = document.getElementById('btn-fullscreen');
   const soundBtn = document.getElementById('btn-sound');
-  const mobileMenuBtn = document.getElementById('btn-mobile-menu');
-  const closeDrawerBtn = document.getElementById('btn-close-drawer');
-  const mobileDrawer = document.getElementById('mobile-drawer');
-  const drawerItemBtns = document.querySelectorAll('.drawer-item-btn');
 
-  // Mobile Gh0ulos-Style Navigation Controls
+  // Mobile Gh0ulos-Style Navigation Controls & Hint Badges
   const mobileBtnPrev = document.getElementById('mobile-btn-prev');
   const mobileBtnNext = document.getElementById('mobile-btn-next');
   const mobileCurrentChapter = document.getElementById('mobile-current-chapter');
+  const topNavHint = document.getElementById('top-nav-hint');
+  const bottomNavHint = document.getElementById('bottom-nav-hint');
+  const mobileCenterWrap = document.querySelector('.mobile-nav-center-wrap');
 
   // Cache card DOM references
   const cardElements = {};
@@ -146,6 +146,7 @@
   let currentRenderedFrame = -1;
   let lastActiveService = null;
   let soundEnabled = false;
+  let hintsDismissed = false;
 
   // Web Audio feedback
   let audioCtx = null;
@@ -166,13 +167,21 @@
     } catch (e) {}
   }
 
-  // --- CANVAS RESIZING (RETINA & MOBILE BALANCED) ---
+  // Dismiss Onboarding Hint Badges once user interacts
+  function dismissHints() {
+    if (hintsDismissed) return;
+    hintsDismissed = true;
+    if (topNavHint) topNavHint.classList.add('hidden');
+    if (bottomNavHint) bottomNavHint.classList.add('hidden');
+    if (mobileCenterWrap) mobileCenterWrap.classList.remove('has-hint');
+    if (mobileBtnNext) mobileBtnNext.classList.remove('glow-pulse');
+  }
+
+  // --- CANVAS RESIZING (DPR 1.0 ON MOBILE = 75% GPU LOAD REDUCTION) ---
   function resizeCanvas() {
     const mobile = isMobile();
-    // Use 1.5 dpr on mobile to preserve 60fps fill-rate and keep memory lightweight
-    const dpr = mobile
-      ? Math.min(window.devicePixelRatio || 1, 1.5)
-      : Math.min(window.devicePixelRatio || 1, 2);
+    // Using 1.0 DPR on mobile renders 390x844 sharply without GPU fill-rate thermal lag
+    const dpr = mobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     const width = window.innerWidth;
     const height = window.innerHeight;
 
@@ -196,8 +205,7 @@
     const imgWidth = img.naturalWidth;
     const imgHeight = img.naturalHeight;
 
-    // Center-crop Cover mode: fills the entire screen seamlessly on all devices (gh0ulos aesthetic)
-    // No duplicate passes, no split views, 100% immersive 3D background
+    // Single-pass center-crop Cover mode: fills 100% of screen seamlessly
     const ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
     const destWidth = imgWidth * ratio;
     const destHeight = imgHeight * ratio;
@@ -207,7 +215,7 @@
     ctx.drawImage(img, 0, 0, imgWidth, imgHeight, destX, destY, destWidth, destHeight);
   }
 
-  // --- STREAMING BUFFER & SMART PRELOADER (WITH MOBILE MEMORY PRUNING) ---
+  // --- STREAMING BUFFER & SMART PRELOADER (WITH STRICT MOBILE MEMORY SLIDING WINDOW) ---
   function loadSingleFrame(index, priority = false) {
     if (index < 0 || index >= TOTAL_FRAMES || framesCache[index] || loadingStatus[index]) {
       return;
@@ -215,7 +223,7 @@
 
     loadingStatus[index] = true;
     const img = new Image();
-    img.decoding = 'async'; // Offload decoding to background thread to eliminate main-thread stutter
+    img.decoding = 'async'; // Offload decode from main UI thread to eliminate lag spikes
     img.src = FRAME_URLS[index];
 
     img.onload = () => {
@@ -242,33 +250,32 @@
 
     img.onerror = () => {
       loadingStatus[index] = false;
-      console.warn(`Error loading frame ${index}: ${FRAME_URLS[index]}`);
     };
   }
 
   function updateStreamingBuffer(centerIndex) {
     const mobile = isMobile();
-    const lookahead = mobile ? 22 : LOOKAHEAD_WINDOW;
-    const behind = mobile ? 8 : 12;
+    // On mobile, keep lean buffer (16 ahead, 6 behind) to avoid network bottleneck
+    const lookahead = mobile ? 16 : LOOKAHEAD_WINDOW;
+    const behind = mobile ? 6 : 12;
 
-    // 1. Proactively stream forward frames
+    // 1. Stream forward
     for (let i = centerIndex; i <= Math.min(centerIndex + lookahead, TOTAL_FRAMES - 1); i++) {
       if (!framesCache[i] && !loadingStatus[i]) {
         loadSingleFrame(i, true);
       }
     }
-    // 2. Proactively stream backward frames
+    // 2. Stream backward
     for (let i = centerIndex - 1; i >= Math.max(centerIndex - behind, 0); i--) {
       if (!framesCache[i] && !loadingStatus[i]) {
         loadSingleFrame(i, false);
       }
     }
 
-    // 3. Mobile Memory Safeguard: Release unneeded textures outside current sliding window
-    // Keeps mobile RAM consumption lean (<250MB) and completely prevents browser tab crashes or stutters
+    // 3. Mobile Memory Guard: Purge distant textures to maintain total RAM under 150MB
     if (mobile) {
-      const purgeMarginBefore = 12;
-      const purgeMarginAfter = 34;
+      const purgeMarginBefore = 10;
+      const purgeMarginAfter = 24;
       for (let i = 0; i < TOTAL_FRAMES; i++) {
         if ((i < centerIndex - purgeMarginBefore || i > centerIndex + purgeMarginAfter) && framesCache[i]) {
           framesCache[i].src = '';
@@ -280,7 +287,7 @@
   }
 
   function idleBackgroundPreload() {
-    // On mobile touch devices, keep sliding window to avoid blowing up texture memory
+    // Only background preload on desktop
     if (isMobile()) return;
 
     let nextIndex = 0;
@@ -306,12 +313,26 @@
       currentRenderedFrame = 0;
     }
 
+    if (mobileCenterWrap) {
+      mobileCenterWrap.classList.add('has-hint');
+    }
+
     updateStreamingBuffer(0);
+    triggerRender();
     setTimeout(idleBackgroundPreload, 1000);
   }
 
-  // --- RENDER LOOP (SPEED GOVERNED & CAPPED PLAYBACK) ---
+  // --- RENDER LOOP WITH IDLE POWER SLEEP ---
+  let isLoopRunning = false;
   let lastRenderTime = performance.now();
+
+  function triggerRender() {
+    if (!isLoopRunning) {
+      isLoopRunning = true;
+      lastRenderTime = performance.now();
+      requestAnimationFrame(renderLoop);
+    }
+  }
 
   function renderLoop(now) {
     if (!now) now = performance.now();
@@ -323,7 +344,6 @@
         const diff = targetProgress - currentProgress;
         if (Math.abs(diff) > 0.00002) {
           // Speed Governor: maximum playback speed cannot exceed 5% faster rate (~21 frames/sec)
-          // Even with a sudden violent scroll, animation glides at the readable calibrated speed!
           const maxStep = MAX_PROGRESS_PER_SEC * deltaSeconds;
           let step = diff * 0.12;
           if (Math.abs(step) > maxStep) {
@@ -364,10 +384,25 @@
       }
 
       // Update UI & Card transitions
-      updateUIAndCards(currentProgress, frameFloat + 1); // 1-based frame for timing calculations
-    }
+      updateUIAndCards(currentProgress, frameFloat + 1);
 
-    requestAnimationFrame(renderLoop);
+      // Automatically dismiss hints once user travels past frame 8
+      if (frameFloat > 8) {
+        dismissHints();
+      }
+
+      // Smart Idle Detection: Stop render loop when stationary to save 100% CPU/GPU on mobile
+      const stillDiff = Math.abs(targetProgress - currentProgress);
+      const keepAnimating = isNavigating || stillDiff > 0.00005 || targetIndex !== currentRenderedFrame;
+
+      if (keepAnimating) {
+        requestAnimationFrame(renderLoop);
+      } else {
+        isLoopRunning = false;
+      }
+    } else {
+      requestAnimationFrame(renderLoop);
+    }
   }
 
   // --- CHAPTER DETECTION HELPER ---
@@ -413,7 +448,7 @@
       if (!el) return;
 
       let opacity = 0;
-      let translateY = 24;
+      let translateY = 20;
 
       if (currentFrameNumber >= timing.fadeInStart && currentFrameNumber <= timing.fadeOutEnd) {
         if (currentFrameNumber < timing.peakStart) {
@@ -421,7 +456,7 @@
           const range = timing.peakStart - timing.fadeInStart;
           const t = range > 0 ? (currentFrameNumber - timing.fadeInStart) / range : 1;
           opacity = t;
-          translateY = (1 - t) * 24;
+          translateY = (1 - t) * 20;
         } else if (currentFrameNumber <= timing.peakEnd) {
           // Fully visible (Peak)
           opacity = 1;
@@ -432,20 +467,20 @@
           const range = timing.fadeOutEnd - timing.peakEnd;
           const t = range > 0 ? (currentFrameNumber - timing.peakEnd) / range : 1;
           opacity = 1 - t;
-          translateY = -t * 18; // gentle float upward as it vanishes
+          translateY = -t * 16;
         }
       }
 
       // Apply styles
       if (opacity > 0.01) {
         el.style.opacity = opacity.toFixed(3);
-        el.style.transform = `translateY(${translateY.toFixed(1)}px) scale(${0.98 + opacity * 0.02})`;
+        el.style.transform = `translateY(${translateY.toFixed(1)}px)`;
         el.style.visibility = 'visible';
         el.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
         el.classList.add('active');
       } else {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(24px) scale(0.98)';
+        el.style.transform = 'translateY(20px)';
         el.style.visibility = 'hidden';
         el.style.pointerEvents = 'none';
         el.classList.remove('active');
@@ -459,16 +494,6 @@
 
       // Top Menu buttons active state
       navItemBtns.forEach(btn => {
-        const frameTarget = parseInt(btn.getAttribute('data-target-frame'), 10);
-        if (frameTarget === activeServiceId) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-
-      // Drawer buttons active state
-      drawerItemBtns.forEach(btn => {
         const frameTarget = parseInt(btn.getAttribute('data-target-frame'), 10);
         if (frameTarget === activeServiceId) {
           btn.classList.add('active');
@@ -503,12 +528,12 @@
     }
   }
 
-  // Smooth cinematic ease: gentle start, stable cruise, graceful settling
   function easeInOutSine(t) {
     return -(Math.cos(Math.PI * t) - 1) / 2;
   }
 
   function scrollToFrame(frameNumber) {
+    dismissHints();
     stopAutoNav();
 
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -519,7 +544,7 @@
     const frameDiff = Math.abs(endProgress - startProgress) * (TOTAL_FRAMES - 1);
     if (frameDiff < 0.2) return;
 
-    // Calibrated cinematic pacing: 5% faster (47.6ms per frame vs 50ms)
+    // Calibrated cinematic pacing: 5% faster (47.6ms per frame)
     const msPerFrame = MS_PER_FRAME;
     const duration = Math.min(Math.max(frameDiff * msPerFrame, 1050), 12800);
 
@@ -530,18 +555,22 @@
     const currentIdx = Math.round(startProgress * (TOTAL_FRAMES - 1));
     const targetIdx = Math.round(endProgress * (TOTAL_FRAMES - 1));
     const stepDir = targetIdx > currentIdx ? 1 : -1;
-    for (let k = 0; k < Math.min(45, Math.abs(targetIdx - currentIdx)); k++) {
+    
+    // On mobile, prioritize landing window
+    const preloadAhead = isMobile() ? 12 : 36;
+    for (let k = 0; k < Math.min(preloadAhead, Math.abs(targetIdx - currentIdx)); k++) {
       const idxToLoad = currentIdx + (k * stepDir);
       if (idxToLoad >= 0 && idxToLoad < TOTAL_FRAMES) {
         loadSingleFrame(idxToLoad, true);
       }
     }
-    // Also preload destination landing window
-    for (let j = Math.max(0, targetIdx - 6); j <= Math.min(TOTAL_FRAMES - 1, targetIdx + 12); j++) {
+    // Landing frame window
+    for (let j = Math.max(0, targetIdx - 4); j <= Math.min(TOTAL_FRAMES - 1, targetIdx + 8); j++) {
       loadSingleFrame(j, true);
     }
 
     playHapticTone(660, 0.06);
+    triggerRender();
 
     function navStep(now) {
       if (!isNavigating) return;
@@ -554,10 +583,11 @@
       targetProgress = progress;
       currentProgress = progress;
 
-      // Synchronize native window scroll position so scrubber and page match
       if (maxScroll > 0) {
         window.scrollTo(0, progress * maxScroll);
       }
+
+      triggerRender();
 
       if (t < 1) {
         navAnim = requestAnimationFrame(navStep);
@@ -569,6 +599,7 @@
         if (maxScroll > 0) {
           window.scrollTo(0, endProgress * maxScroll);
         }
+        triggerRender();
       }
     }
 
@@ -577,47 +608,27 @@
 
   // --- EVENT LISTENERS ---
 
-  // User interruption handlers (stops auto-flight if user manually scrolls, touches or drags)
+  // Stop auto flight on user interruption
   window.addEventListener('wheel', stopAutoNav, { passive: true });
-  window.addEventListener('touchstart', (e) => {
-    if (!e.target.closest('.nav-item-btn, .drawer-item-btn, .rail-node, #brand-logo-btn, .mobile-menu-btn, .mobile-nav-arrow-btn')) {
-      stopAutoNav();
-    }
-  }, { passive: true });
   window.addEventListener('mousedown', (e) => {
-    if (!e.target.closest('.nav-item-btn, .drawer-item-btn, .rail-node, #brand-logo-btn, .mobile-menu-btn, .mobile-nav-arrow-btn')) {
+    if (!e.target.closest('.nav-item-btn, .rail-node, #brand-logo-btn, .mobile-nav-arrow-btn')) {
       stopAutoNav();
     }
   });
+
+  // DISABLE TOUCH DRAG SCROLLING ON MOBILE (Eliminates lag, friction, and rubber-banding)
+  window.addEventListener('touchmove', (e) => {
+    if (isMobile()) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 
   // 1. Top Menu button clicks
   navItemBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      dismissHints();
       const targetFrame = parseInt(btn.getAttribute('data-target-frame'), 10);
-      scrollToFrame(targetFrame);
-    });
-  });
-
-  // Mobile drawer controls
-  if (mobileMenuBtn && mobileDrawer) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileDrawer.classList.add('open');
-      playHapticTone(520, 0.04);
-    });
-  }
-
-  if (closeDrawerBtn && mobileDrawer) {
-    closeDrawerBtn.addEventListener('click', () => {
-      mobileDrawer.classList.remove('open');
-    });
-  }
-
-  drawerItemBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetFrame = parseInt(btn.getAttribute('data-target-frame'), 10);
-      if (mobileDrawer) mobileDrawer.classList.remove('open');
       scrollToFrame(targetFrame);
     });
   });
@@ -626,6 +637,7 @@
   if (mobileBtnPrev) {
     mobileBtnPrev.addEventListener('click', (e) => {
       e.preventDefault();
+      dismissHints();
       const currentFrame = currentProgress * (TOTAL_FRAMES - 1);
       const chIdx = getChapterIndexFromFrame(currentFrame);
       const targetIdx = Math.max(0, chIdx - 1);
@@ -636,6 +648,7 @@
   if (mobileBtnNext) {
     mobileBtnNext.addEventListener('click', (e) => {
       e.preventDefault();
+      dismissHints();
       const currentFrame = currentProgress * (TOTAL_FRAMES - 1);
       const chIdx = getChapterIndexFromFrame(currentFrame);
       const targetIdx = Math.min(CHAPTER_MILESTONES.length - 1, chIdx + 1);
@@ -643,47 +656,17 @@
     });
   }
 
-  // 3. Horizontal Touch Swipe Gestures for Mobile
-  let touchStartX = 0;
-  let touchStartY = 0;
-  window.addEventListener('touchstart', (e) => {
-    if (e.touches && e.touches.length > 0) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }
-  }, { passive: true });
-
-  window.addEventListener('touchend', (e) => {
-    if (!e.changedTouches || e.changedTouches.length === 0) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX;
-    const deltaY = e.changedTouches[0].clientY - touchStartY;
-
-    // Detect intentional horizontal swipe (distance > 50px, mostly horizontal)
-    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-      const currentFrame = currentProgress * (TOTAL_FRAMES - 1);
-      const chIdx = getChapterIndexFromFrame(currentFrame);
-      if (deltaX < 0) {
-        // Swipe left -> Next chapter
-        const targetIdx = Math.min(CHAPTER_MILESTONES.length - 1, chIdx + 1);
-        scrollToFrame(CHAPTER_MILESTONES[targetIdx]);
-      } else {
-        // Swipe right -> Previous chapter
-        const targetIdx = Math.max(0, chIdx - 1);
-        scrollToFrame(CHAPTER_MILESTONES[targetIdx]);
-      }
-    }
-  }, { passive: true });
-
-  // 4. Timeline rail clicks (Desktop)
+  // 3. Timeline rail clicks (Desktop)
   railNodes.forEach(node => {
     node.addEventListener('click', (e) => {
       e.preventDefault();
+      dismissHints();
       const targetFrame = parseInt(node.getAttribute('data-target-frame'), 10);
       scrollToFrame(targetFrame);
     });
   });
 
-  // 5. Logo click (scroll to top)
+  // 4. Logo click (scroll to top)
   if (brandLogoBtn) {
     brandLogoBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -691,17 +674,17 @@
     });
   }
 
-  // 6. Native window scroll with Violent Scroll Brake / Speed Governor
+  // 5. Desktop Native window scroll with Violent Scroll Brake
   let isSyncingScroll = false;
   window.addEventListener('scroll', () => {
-    if (isNavigating || isSyncingScroll) return; // Prevent fighting during auto flight or governor sync
+    if (isNavigating || isSyncingScroll || isMobile()) return;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     if (maxScroll <= 0) return;
 
     const rawProgress = Math.max(0, Math.min(window.scrollY / maxScroll, 1));
     const lead = rawProgress - currentProgress;
 
-    // Rule: Do not permit an abrupt/violent scroll flick to rush all the way to the end "de un solo golpe"
+    // Rule: Do not permit an abrupt scroll flick to rush straight to the end
     if (Math.abs(lead) > MAX_SCROLL_LEAD) {
       targetProgress = currentProgress + Math.sign(lead) * MAX_SCROLL_LEAD;
       isSyncingScroll = true;
@@ -710,9 +693,10 @@
     } else {
       targetProgress = rawProgress;
     }
+    triggerRender();
   }, { passive: false });
 
-  // 7. Scrubber interaction (Desktop)
+  // 6. Scrubber interaction (Desktop)
   let isDraggingScrubber = false;
   function handleScrubber(e) {
     const rect = scrubberTrackWrap.getBoundingClientRect();
@@ -725,6 +709,7 @@
       behavior: 'auto'
     });
     targetProgress = ratio;
+    triggerRender();
   }
 
   if (scrubberTrackWrap) {
@@ -738,20 +723,9 @@
     window.addEventListener('mouseup', () => {
       isDraggingScrubber = false;
     });
-
-    scrubberTrackWrap.addEventListener('touchstart', (e) => {
-      isDraggingScrubber = true;
-      handleScrubber(e);
-    }, { passive: true });
-    window.addEventListener('touchmove', (e) => {
-      if (isDraggingScrubber) handleScrubber(e);
-    }, { passive: true });
-    window.addEventListener('touchend', () => {
-      isDraggingScrubber = false;
-    });
   }
 
-  // 8. Keyboard navigation
+  // 7. Keyboard navigation
   window.addEventListener('keydown', (e) => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const step = maxScroll / (TOTAL_FRAMES / 4);
@@ -762,11 +736,13 @@
       case ' ':
         e.preventDefault();
         window.scrollBy({ top: step, behavior: 'smooth' });
+        triggerRender();
         break;
       case 'ArrowUp':
       case 'PageUp':
         e.preventDefault();
         window.scrollBy({ top: -step, behavior: 'smooth' });
+        triggerRender();
         break;
       case 'Home':
         e.preventDefault();
@@ -779,7 +755,7 @@
     }
   });
 
-  // 9. Fullscreen & Sound
+  // 8. Fullscreen & Sound
   if (fullscreenBtn) {
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
@@ -800,13 +776,14 @@
   }
 
   // --- INITIALIZATION ---
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    triggerRender();
+  });
   resizeCanvas();
 
   for (let i = 0; i < INITIAL_BUFFER_COUNT; i++) {
     loadSingleFrame(i, true);
   }
-
-  renderLoop();
 
 })();

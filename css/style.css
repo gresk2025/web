@@ -152,6 +152,20 @@ html, body {
   filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.75));
 }
 
+.header-top-row {
+  display: contents;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.top-hint {
+  display: none;
+}
+
 /* Top Center Navigation Menu */
 .main-nav {
   pointer-events: auto;
@@ -767,35 +781,174 @@ html, body {
 }
 
 /* ==========================================================================
-   MOBILE & RESPONSIVE
+   MOBILE & RESPONSIVE (Optimized, 2-Row Top Menu, No Touch Scroll Lag)
    ========================================================================== */
 .mobile-menu-btn {
-  display: none;
+  display: none !important;
 }
 
 .mobile-arrow-nav {
   display: none;
 }
 
-@media (max-width: 1024px) {
-  .main-header {
-    padding: 0.85rem 1.4rem;
+/* Glowing Hint Badges */
+.nav-hint-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.82rem;
+  background: rgba(8, 14, 26, 0.88);
+  border: 1px solid rgba(0, 242, 254, 0.55);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  box-shadow: 0 0 14px rgba(0, 242, 254, 0.35);
+  animation: hint-breathe 2.2s infinite ease-in-out;
+  transition: opacity 0.35s var(--ease-cinematic), transform 0.35s var(--ease-cinematic), visibility 0.35s;
+  pointer-events: none;
+}
+
+.nav-hint-badge .hint-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: pulse-dot 1.5s infinite ease-in-out;
+}
+
+.nav-hint-badge .hint-arrow-anim {
+  color: var(--accent-cyan);
+  font-size: 0.85rem;
+  display: inline-block;
+  animation: hint-arrow-bounce 1.2s infinite ease-in-out;
+}
+
+@keyframes hint-breathe {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3), inset 0 0 8px rgba(0, 242, 254, 0.1);
+    border-color: rgba(0, 242, 254, 0.45);
   }
-  
-  .main-nav {
-    display: none;
+  50% {
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.8), inset 0 0 12px rgba(0, 242, 254, 0.25);
+    border-color: #00f2fe;
+  }
+}
+
+@keyframes hint-arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.nav-hint-badge.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.9) !important;
+  pointer-events: none !important;
+}
+
+/* Glowing Pulsing Aura for Arrow Navigation */
+.mobile-nav-arrow-btn.glow-pulse {
+  animation: arrow-glow 2s infinite ease-in-out;
+  border-color: var(--accent-cyan);
+}
+
+@keyframes arrow-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.4), 0 8px 24px rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 242, 254, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.9), 0 0 35px rgba(79, 172, 254, 0.6), 0 8px 24px rgba(0, 0, 0, 0.6);
+    border-color: #00f2fe;
+    transform: scale(1.08);
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Disable finger drag scroll on mobile to eliminate jank & heavy gesture friction */
+  html, body {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+    touch-action: none !important;
   }
 
-  .mobile-menu-btn {
+  #canvas-stage, #story-overlays, #virtual-scroll-track {
+    touch-action: none !important;
+  }
+
+  /* Header with 2-row menu (no hamburger collapse) */
+  .main-header {
+    padding: 0.5rem 0.9rem;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    background: linear-gradient(180deg, rgba(5, 6, 8, 0.96) 0%, rgba(5, 6, 8, 0.85) 75%, transparent 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .header-status-pill {
     display: none;
   }
-}
 
-@media (max-width: 768px) {
+  /* Uncollapsed 2-row Services Menu */
+  .main-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.28rem !important;
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .nav-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    width: 100% !important;
+  }
+
+  .nav-item-btn {
+    font-size: 0.70rem !important;
+    font-weight: 500 !important;
+    padding: 0.30rem 0.52rem !important;
+    border-radius: 100px !important;
+    background: rgba(10, 15, 26, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-item-btn.active {
+    color: #000 !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)) !important;
+    box-shadow: 0 2px 12px rgba(0, 242, 254, 0.5) !important;
+  }
+
+  /* Top Glowing Instruction Hint */
+  .top-hint {
+    display: inline-flex !important;
+    margin-top: 0.1rem !important;
+  }
+
   /* Hide timeline rail and bottom scrubber on mobile */
   #timeline-rail {
     display: none !important;
@@ -805,13 +958,13 @@ html, body {
     display: none !important;
   }
 
-  /* Mobile Gh0ulos-Style Arrow Controls */
+  /* Mobile Arrow Controls (Gh0ulos-Style with Glowing Pulse) */
   .mobile-arrow-nav {
     position: fixed;
     bottom: max(1.2rem, env(safe-area-inset-bottom, 1.2rem));
     left: 0;
     width: 100%;
-    padding: 0 1.25rem;
+    padding: 0 1.2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -824,16 +977,14 @@ html, body {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(10, 14, 23, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(10, 14, 23, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ffffff;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     transition: all 0.25s var(--ease-cinematic);
     outline: none;
     -webkit-tap-highlight-color: transparent;
@@ -852,27 +1003,46 @@ html, body {
   }
 
   .mobile-nav-arrow-btn.disabled {
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+
+  .mobile-nav-center-wrap {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .mobile-section-indicator {
-    pointer-events: auto;
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.42rem 0.95rem;
-    background: rgba(10, 14, 23, 0.6);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    padding: 0.38rem 0.85rem;
+    background: rgba(10, 14, 23, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 100px;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
     color: #fff;
     letter-spacing: 0.05em;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s;
+  }
+
+  .mobile-nav-center-wrap.has-hint .mobile-section-indicator {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobile-nav-center-wrap .bottom-hint {
+    position: absolute;
+    white-space: nowrap;
+    z-index: 2;
   }
 
   .mobile-section-indicator #mobile-current-chapter {
@@ -889,26 +1059,24 @@ html, body {
     inset: 0;
     padding: 0;
     pointer-events: none;
-    display: block; /* Avoid horizontal flex blowout */
+    display: block;
   }
   
-  /* Mobile Story Cards: Translucent, floating seamlessly over 3D animation */
+  /* Mobile Story Cards: Lightweight GPU profile (translucent dark glass without 60fps blur lag) */
   .story-card {
     position: absolute !important;
     left: 1rem !important;
     right: 1rem !important;
-    bottom: 5.4rem !important;
+    bottom: 5.2rem !important;
     width: auto !important;
     max-width: calc(100vw - 2rem) !important;
     margin: 0 !important;
-    padding: 1.15rem 1.25rem !important;
-    border-radius: 20px !important;
-    background: rgba(6, 10, 18, 0.48) !important;
-    backdrop-filter: blur(14px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.13) !important;
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 242, 254, 0.1) !important;
-    gap: 0.6rem !important;
+    padding: 1.1rem 1.25rem !important;
+    border-radius: 18px !important;
+    background: rgba(7, 12, 22, 0.82) !important;
+    border: 1px solid rgba(0, 242, 254, 0.22) !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 242, 254, 0.08) !important;
+    gap: 0.55rem !important;
   }
 
   .story-card h2 {
